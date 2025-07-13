@@ -1,0 +1,83 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 2rem;
+  background-color: #f9f9f9;
+}
+
+h1 {
+  color: #333;
+}
+
+.message {
+  background: white;
+  padding: 1rem;
+  border: 1px solid #ddd;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+}
+
+.message small {
+  color: #777;
+}
+
+form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+}
+
+input,
+textarea,
+button {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #1e90ff;
+  color: white;
+  padding: 0.8rem 1.5rem;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  font-size: 1.3rem;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-links li a {
+  transition: color 0.2s;
+}
+
+.navbar-links li a:hover {
+  color: #ffeb3b;
+}

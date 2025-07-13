@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Message Board</title>
+    <link rel="stylesheet" href="/css/messagesView.css" />
+  </head>
+  <body>
+    <%- include('../partials/navbar.ejs') %>
+    <h1>Message Board</h1>
+
+    <div id="messages">
+      <% locals.messages.map(message => {%>
+      <div class="message">
+        <strong><%= message.author %></strong>
+        <p><%= message.message %></p>
+        <small><%= message.date %></small>
+      </div>
+      <% }) %>
+    </div>
+
+    <form action="/messages" method="POST">
+      <label for="author">Your Name:</label>
+      <input type="text" id="author" name="author" required />
+
+      <label for="message">Message:</label>
+      <textarea id="message" name="message" rows="4" required></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+  </body>
+</html>
