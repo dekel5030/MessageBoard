@@ -1,63 +1,48 @@
-let messages = [
-  {
-    id: 1,
-    author: "Dekel",
-    date: "10/07/25 14:32",
-    message: "Hey everyone! Welcome to the new message board 😄",
-  },
-  {
-    id: 2,
-    author: "Admin",
-    date: "11/07/25 09:00",
-    message: "Please keep discussions respectful and constructive.",
-  },
-  {
-    id: 3,
-    author: "Maya",
-    date: "12/07/25 16:45",
-    message: "Does anyone know how to deploy an Express app to Heroku?",
-  },
-];
-
-let nextId = messages.length + 1;
+const pool = require("./db");
 
 function formatDate(date) {
   const d = new Date(date);
-
   const day = String(d.getDate()).padStart(2, "0");
   const month = String(d.getMonth() + 1).padStart(2, "0");
   const year = String(d.getFullYear()).slice(-2);
   const hours = String(d.getHours()).padStart(2, "0");
   const minutes = String(d.getMinutes()).padStart(2, "0");
-
   return `${day}/${month}/${year} ${hours}:${minutes}`;
 }
 
-function getAllMessages() {
-  return messages;
+async function getAllMessages() {
+  const result = await pool.query("SELECT * FROM messages ORDER BY id ASC");
+  return result.rows.map((msg) => ({
+    ...msg,
+    date: formatDate(msg.date),
+  }));
 }
 
-function getMessageById(id) {
-  return messages.find((msg) => msg.id === id);
+async function getMessageById(id) {
+  const result = await pool.query("SELECT * FROM messages WHERE id = $1", [id]);
+  if (result.rows.length === 0) return null;
+  const msg = result.rows[0];
+  return { ...msg, date: formatDate(msg.date) };
 }
 
-function addMessage(author, message) {
-  const newMessage = {
-    id: nextId++,
-    author,
-    date: formatDate(new Date()),
-    message,
-  };
-  messages.push(newMessage);
-  return newMessage;
+async function addMessage(author, message) {
+  const now = new Date();
+  const result = await pool.query(
+    "INSERT INTO messages (author, date, message) VALUES ($1, $2, $3) RETURNING *",
+    [author, now, message]
+  );
+  const msg = result.rows[0];
+  return { ...msg, date: formatDate(msg.date) };
 }
 
-function deleteMessage(id) {
-  const index = messages.findIndex((msg) => msg.id === id);
-  if (index !== -1) {
-    return messages.splice(index, 1)[0];
-  }
-  return null;
+async function deleteMessage(id) {
+  const result = await pool.query(
+    "DELETE FROM messages WHERE id = $1 RETURNING *",
+    [id]
+  );
+  if (result.rows.length === 0) return null;
+  const msg = result.rows[0];
+  return { ...msg, date: formatDate(msg.date) };
 }
 
 module.exports = {
