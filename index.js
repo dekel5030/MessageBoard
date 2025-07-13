@@ -9,7 +9,7 @@ app.set("view engine", "ejs");
 app.set("views", "./views");
 
 app.use("/messages", messagesRouter);
-app.get("/", (req, res) => res.send("Welcome    to the home page"));
+app.get("/", (req, res) => res.render("./pages/home"));
 
 app.use(express.static(path.join(__dirname, "public")));
 

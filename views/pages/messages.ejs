@@ -1,11 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Message Board</title>
-    <link rel="stylesheet" href="/css/messagesView.css" />
-  </head>
+  <%- include('../partials/header', { title: 'Message Board' }) %>
   <body>
     <%- include('../partials/navbar.ejs') %>
     <h1>Message Board</h1>
@@ -29,5 +24,6 @@
 
       <button type="submit">Send Message</button>
     </form>
+    <%- include('../partials/footer') %>
   </body>
 </html>
